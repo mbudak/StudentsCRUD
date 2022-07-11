@@ -47,6 +47,10 @@ app.get('/', (req, res) => {
   })
 })
 
+app.get('/new-student', (req, res) => {
+  res.render('new-student.ejs');
+})
+
 app.post("/data/create", async (request, response) => {
     const student = new studentModel(request.body);
     try {
