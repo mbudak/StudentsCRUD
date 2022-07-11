@@ -1,6 +1,46 @@
 <%- include('layout.ejs'); %>
 
 <div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Students</li>
+          <li class="ml-auto"><a href="#" class="btn btn-sm btn-primary">New Student</a>  </li>
+        </ol>
+        
+      </nav>
+      
+    
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Age</th>
+            <th scope="col">Email</th>
+            <th scope="col">Profile Img</th>
+            <ht scope="col">Action</ht>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(var i = 0; i < students.length; i++) {%>
+            <tr>
+              <th scope="row">1</th>
+              <td><%= students[i].name %></td>
+              <td><%= students[i].age %></td>
+              <td><%= students[i].email %></td>
+              <td>
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle"
+                height="24" alt="Avatar" loading="lazy" />
+                
+              </td>
+              <td><a href="#" class="btn btn-sm btn-danger">Delete</a></td>
+            </tr>
+          <div> </div>
+            <% } %>
+          
+        </tbody>
+      </table>
 
-    <h1>Hello Cruel World</h1>
+
 </div>
