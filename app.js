@@ -11,6 +11,7 @@ const students = require('./models/student')
 
 // MongoDB
 const mongoose = require('mongoose');
+
 var uri = "mongodb+srv://dbuserforstudent:q4Ebb4HkuHr5d1FY@cluster0.uspdezj.mongodb.net/?retryWrites=true&w=majority"
 
 mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true });
@@ -31,6 +32,8 @@ app.set('view engine', 'ejs');
 
 
 // Middlewares
+// app.use(express.json());
+app.use(express.urlencoded( { extended: true }));
 
 
 // Routes
@@ -51,40 +54,24 @@ app.get('/new-student', (req, res) => {
   res.render('new-student.ejs');
 })
 
-app.post("/data/create", async (request, response) => {
-    const student = new studentModel(request.body);
-    try {
-      await student.save();
-      response.send(student);
-    } catch (error) {
-      response.status(500).send(error);
+app.post("/new-student",  (req, res) => {
+    // const student = new studentModel(req.body); // fix it later    
+    const { name, age, email, avatar } = req.body;
+    var student = { 
+      name: name,
+      age: age,
+      email: email,
+      avatar: avatar
     }
+    
+    try {
+      students.create(student);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+    res.redirect("/");
   });
-  
 
-  app.patch("/data/student/:id", async (request, response) => {
-    try {
-      await studentModel.findByIdAndUpdate(request.params.id, request.body);
-      await studentModel.save();
-      response.send(studentModel);
-    } catch (error) {
-      response.status(500).send(error);
-    }
-  });
-  
-
-  app.delete("/data/student/:id", async (request, response) => {
-    try {
-      const student = await studentModel.findByIdAndDelete(request.params.id);
-  
-      if (!student) response.status(404).send("No item found");
-      response.status(200).send();
-    } catch (error) {
-      response.status(500).send(error);
-    }
-  });
-  
-  
 
 
 // Listen
