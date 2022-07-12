@@ -72,7 +72,15 @@ app.post("/new-student",  (req, res) => {
     res.redirect("/");
   });
 
-
+  app.post("/delete-student/:id",  (req, res) => {
+    let { id } = req.params;
+    students.findByIdAndDelete(id).then((student) => {
+      console.log('student deleted', id);
+    }).catch(err => {
+      console.log('err', err.message);
+    })
+    res.redirect("/");
+  });
 
 // Listen
 app.listen(port, () => {
